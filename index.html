@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        body{
+            height: 100%;
+            width: 100%;
+        }
+        .container{
+            max-width: 550px;
+            margin: 0 auto;
+        }
+        .number{
+            max-width: 50px;
+            font-size: 24px;
+            margin: 10px;
+        }
+        .tableLetter{
+            max-width: 50px;
+            font-size: 24px;
+            margin: 10px;
+        }
+        .textInput{
+            width: 40%;
+            margin: 10px;
+            font-size: 18px;
+        }
+        #goButton{
+            font-size: 24px;
+            margin: 10px;
+        }
+    </style>
+    <head>
+        <title>Polibus</title>
+    </head>
+    <body>
+
+            <div class="container">
+                <div class="container__grid">
+                    <input type="text" class="number" value=" " disabled>
+                    <input type="text" class="number" value="1" disabled>
+                    <input type="text" class="number" value="2" disabled>
+                    <input type="text" class="number" value="3" disabled>
+                    <input type="text" class="number" value="4" disabled>
+                    <input type="text" class="number" value="5" disabled>
+                </div>
+
+                <div class="container__grid">
+                    <input type="text" class="number" value="1" disabled>
+                    <input type="text" class="tableLetter" id="t1" value="a" >
+                    <input type="text" class="tableLetter" id="t2" value="b" >
+                    <input type="text" class="tableLetter" id="t3" value="c" >
+                    <input type="text" class="tableLetter" id="t4" value="d" >
+                    <input type="text" class="tableLetter" id="t5" value="e" >
+                </div>
+                <div class="container__grid">
+                    <input type="text" class="number" value="2" disabled>
+                    <input type="text" class="tableLetter" id="t6" value="f" >
+                    <input type="text" class="tableLetter" id="t7" value="g" >
+                    <input type="text" class="tableLetter" id="t8" value="h" >
+                    <input type="text" class="tableLetter" id="t9" value="i" >
+                    <input type="text" class="tableLetter" id="t10" value="k" >
+                </div>
+                <div class="container__grid">
+                    <input type="text" class="number" value="3" disabled>
+                    <input type="text" class="tableLetter" id="t11" value="l" >
+                    <input type="text" class="tableLetter" id="t12" value="m" >
+                    <input type="text" class="tableLetter" id="t13" value="n" >
+                    <input type="text" class="tableLetter" id="t14" value="o" >
+                    <input type="text" class="tableLetter" id="t15" value="p" >
+                </div>
+                <div class="container__grid">
+                    <input type="text" class="number" value="4" disabled>
+                    <input type="text" class="tableLetter" id="t16" value="q" >
+                    <input type="text" class="tableLetter" id="t17" value="r" >
+                    <input type="text" class="tableLetter" id="t18" value="s" >
+                    <input type="text" class="tableLetter" id="t19" value="t" >
+                    <input type="text" class="tableLetter" id="t20" value="u" >
+                </div>
+                <div class="container__grid">
+                    <input type="text" class="number" value="5" disabled>
+                    <input type="text" class="tableLetter" id="t21" value="v" >
+                    <input type="text" class="tableLetter" id="t22" value="w" >
+                    <input type="text" class="tableLetter" id="t23" value="x" >
+                    <input type="text" class="tableLetter" id="t24" value="y" >
+                    <input type="text" class="tableLetter" id="t25" value="z" >
+                </div>
+                <div class="container__grid">
+                    <input type="text" class="textInput" id="inPut" placeholder="Input text here" >
+                    <input type="text" class="textInput" id="outPut" placeholder="Crypted text" disabled >
+                </div>
+                <div class="container__grid">
+                    <input type="button" value="Crypt" id="goButton" onclick="crypt();">
+                    <input type="button" value="Encrypt" id="goButton" onclick="encrypt();">
+                </div>
+
+            </div>
+
+
+            <script>
+                function getKey(){
+                    let key = [,[],[],[],[],[]];
+                    let n = 1;
+                    for(let i = 1;i<=5;i++){
+                        for(let j = 1;j<=5;j++){
+                        key[i][j] = document.getElementById(`t${n}`).value[0];
+                        n++;
+                        }
+                    }
+                    
+                    return(key);
+                }
+                function findErrors(array){
+                    let error1 = false;
+                    for(let i =1;i<=5;i++){
+                        for(let j = 1;j<=5;j++){
+                            let count  = 0;
+                            for(let k =1;k<=5;k++){
+                                for(let l = 1;l<=5;l++){
+                                    if(array[i][j]==array[k][l]){count++;}
+                                    
+                                }
+                            }
+                            if(count!=1){error1 = true;break}
+                        }
+                        
+                    }
+                   return(error1);
+                }
+                function returnIndex(char,key){
+                    if(char == 'j')return([2,4]);
+                    for(let i =1;i<=5;i++){
+                        for(let j = 1;j<=5;j++){
+                            if(key[i][j] == char){
+                                return([i,j]);
+                            }
+                        }
+                    }
+                }
+                function crypt(){
+                    let outputText = ' ';
+                    const ourkey = getKey();
+                    
+                    if(findErrors(ourkey)){alert("Something is wrong in your key")
+                    }else{
+                    const inputText = document.getElementById("inPut").value;
+                    let firstString = [],secondString = [];
+                    for(let i =0;i<=inputText.length-1;i++){
+                        firstString[i] = returnIndex(inputText[i],ourkey)[0];
+                        secondString[i] = returnIndex(inputText[i],ourkey)[1];
+                    }
+                    console.log(firstString);
+                    console.log(secondString);
+                    //Erku toxy irar kpcrecinqy erkrordy arajini hetevic vor vreqov ancneq
+                    let oneString = firstString.concat(secondString);
+                    console.log(oneString);
+                    for(let i = 0;i<=oneString.length-1;i+=2){
+                        outputText += ourkey[oneString[i]][oneString[i+1]];
+                    }
+                    
+                    document.getElementById("outPut").value = outputText;
+                }
+             }
+            
+                function encrypt(){
+                    let outputText = ' ';
+                    const ourkey = getKey();
+                    if(findErrors(ourkey)){alert("Something is wrong in your key")
+                    }else{
+                        const inputText = document.getElementById("inPut").value;
+                        let firstString =[],secondString =[] , oneString = [];
+                        for(let i = 0;i<=inputText.length-1;i++){
+                            oneString[i*2] =returnIndex(inputText[i],ourkey)[0];
+                            oneString[i*2 + 1] =returnIndex(inputText[i],ourkey)[1];
+                        }
+                        for(let i = 0;i <=(oneString.length)/2 - 1 ;i++){
+                            firstString[i] = oneString[i];
+                        }
+                        for(let i = (oneString.length)/2 ;i <=oneString.length-1 ;i++){
+                            secondString[i - ((oneString.length)/2) ] = oneString[i];
+                        }
+                       console.log(oneString);
+                       console.log(firstString);
+                       console.log(secondString);
+                        for(let i = 0;i<=firstString.length-1;i++){
+                            outputText+= ourkey[firstString[i]][secondString[i]];
+                        }
+                        document.getElementById("outPut").value = outputText;
+                    }
+                }
+            </script>
+    </body>
+</html>
