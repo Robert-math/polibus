@@ -127,7 +127,15 @@
                    return(error1);
                 }
                 function returnIndex(char,key){
-                    if(char == 'j')return([2,4]);
+                     if(char == 'j'){
+                        for(let i =1;i<=5;i++){
+                        for(let j = 1;j<=5;j++){
+                            if(key[i][j] == "i"){
+                                return([i,j]);
+                            }
+                        }
+                    }
+                    }
                     for(let i =1;i<=5;i++){
                         for(let j = 1;j<=5;j++){
                             if(key[i][j] == char){
